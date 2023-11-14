@@ -1,0 +1,9 @@
+VERSION:3 SOURCE_TIMESTAMP:5758866D
+NODE:I LEVEL:0 LINE:29 "C:\cvavr\inc\mega8.h"
+NODE:I LEVEL:0 LINE:30 "RadioPriem.h"
+NODE:M LEVEL:0 LINE:33 "ADC_VREF_TYPE"
+NODE:V LEVEL:0 LINE:35 "msLedB -> RAM:????"
+NODE:V LEVEL:0 LINE:36 "msLedR -> RAM:????"
+NODE:F LEVEL:0 LINE:41 "timer2_comp_isr(void)"
+NODE:F LEVEL:0 LINE:51 "adc_isr(void)"
+NODE:F LEVEL:0 LINE:57 "main(void)"

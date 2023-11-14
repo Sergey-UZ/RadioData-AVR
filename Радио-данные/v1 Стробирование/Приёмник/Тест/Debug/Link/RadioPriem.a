@@ -1,0 +1,610 @@
+;PCODE: $00000000 VOL: 0
+	#ifndef __SLEEP_DEFINED__
+;PCODE: $00000001 VOL: 0
+	#define __SLEEP_DEFINED__
+;PCODE: $00000002 VOL: 0
+	.EQU __se_bit=0x20
+;PCODE: $00000003 VOL: 0
+	.EQU __sm_mask=0x50
+;PCODE: $00000004 VOL: 0
+	.EQU __sm_powerdown=0x10
+;PCODE: $00000005 VOL: 0
+	.EQU __sm_standby=0x40
+;PCODE: $00000006 VOL: 0
+	.SET power_ctrl_reg=mcucr
+;PCODE: $00000007 VOL: 0
+	#endif
+;PCODE: $00000008 VOL: 0
+;PCODE: $00000009 VOL: 0
+;volatile char RadioPaketIn[RADIO_PAKET_DATA_BAYT_COUNT + 1];
+;volatile char RadioPaketPrinyat = 0;
+;volatile char RadioPaketOverflow = 0;
+;char RadioRead (char *Data, char *FlagOwerflow)
+; 0001 002F {
+
+	.CSEG
+;PCODE: $0000000A VOL: 0
+;PCODE: $0000000B VOL: 0
+; 0001 0030 unsigned char i; // Индексная переменная
+; 0001 0031 
+; 0001 0032 if (RadioPaketPrinyat == 1)
+;PCODE: $0000000C VOL: 0
+;PCODE: $0000000D VOL: 0
+;PCODE: $0000000E VOL: 0
+;PCODE: $0000000F VOL: 0
+;	*Data -> R19
+;	*FlagOwerflow -> R16
+;	i -> R17
+;PCODE: $00000010 VOL: 1
+;PCODE: $00000011 VOL: 0
+;PCODE: $00000012 VOL: 0
+; 0001 0033 {
+; 0001 0034 for (i = 0; i < RADIO_PAKET_DATA_BAYT_COUNT; i++)
+;PCODE: $00000013 VOL: 0
+;PCODE: $00000014 VOL: 0
+;PCODE: $00000015 VOL: 0
+;PCODE: $00000016 VOL: 0
+;PCODE: $00000017 VOL: 0
+;PCODE: $00000018 VOL: 0
+;PCODE: $00000019 VOL: 0
+;PCODE: $0000001A VOL: 0
+;PCODE: $0000001B VOL: 0
+; 0001 0035 Data[i] = RadioPaketIn[i];
+;PCODE: $0000001C VOL: 0
+;PCODE: $0000001D VOL: 0
+;PCODE: $0000001E VOL: 0
+;PCODE: $0000001F VOL: 1
+;PCODE: $00000020 VOL: 0
+;PCODE: $00000021 VOL: 0
+;PCODE: $00000022 VOL: 0
+;PCODE: $00000023 VOL: 0
+;PCODE: $00000024 VOL: 0
+;PCODE: $00000025 VOL: 0
+;PCODE: $00000026 VOL: 0
+;PCODE: $00000027 VOL: 0
+;PCODE: $00000028 VOL: 0
+; 0001 0036 *FlagOwerflow = RadioPaketOverflow;
+;PCODE: $00000029 VOL: 1
+;PCODE: $0000002A VOL: 0
+;PCODE: $0000002B VOL: 0
+; 0001 0037 RadioPaketOverflow = 0;
+;PCODE: $0000002C VOL: 0
+;PCODE: $0000002D VOL: 1
+; 0001 0038 RadioPaketPrinyat = 0;
+;PCODE: $0000002E VOL: 0
+;PCODE: $0000002F VOL: 1
+; 0001 0039 return 1;
+;PCODE: $00000030 VOL: 0
+;PCODE: $00000031 VOL: 0
+;PCODE: $00000032 VOL: 0
+;PCODE: $00000033 VOL: 0
+; 0001 003A }
+; 0001 003B return 0;
+;PCODE: $00000034 VOL: 0
+;PCODE: $00000035 VOL: 0
+;PCODE: $00000036 VOL: 0
+;PCODE: $00000037 VOL: 0
+;PCODE: $00000038 VOL: 0
+; 0001 003C }
+;PCODE: $00000039 VOL: 0
+;char CRC_8(char *Data, unsigned char Length_Data)
+; 0001 004A {
+;PCODE: $0000003A VOL: 0
+;PCODE: $0000003B VOL: 0
+; 0001 004B char Registr_CRC = 0xFF; // Начальное значение регистра CRC
+; 0001 004C unsigned char i; // Индексная переменная
+; 0001 004D 
+; 0001 004E while (Length_Data--)  //Вычислить CRC для блока данных
+;PCODE: $0000003C VOL: 0
+;PCODE: $0000003D VOL: 0
+;PCODE: $0000003E VOL: 0
+;PCODE: $0000003F VOL: 0
+;	*Data -> R18
+;	Length_Data -> R19
+;	Registr_CRC -> R17
+;	i -> R16
+;PCODE: $00000040 VOL: 0
+;PCODE: $00000041 VOL: 0
+;PCODE: $00000042 VOL: 0
+;PCODE: $00000043 VOL: 0
+;PCODE: $00000044 VOL: 0
+;PCODE: $00000045 VOL: 0
+;PCODE: $00000046 VOL: 0
+;PCODE: $00000047 VOL: 0
+; 0001 004F {
+; 0001 0050 Registr_CRC ^= *Data++;
+;PCODE: $00000048 VOL: 0
+;PCODE: $00000049 VOL: 0
+;PCODE: $0000004A VOL: 0
+;PCODE: $0000004B VOL: 0
+;PCODE: $0000004C VOL: 0
+;PCODE: $0000004D VOL: 0
+; 0001 0051 for (i = 0; i < 8; i++)
+;PCODE: $0000004E VOL: 0
+;PCODE: $0000004F VOL: 0
+;PCODE: $00000050 VOL: 0
+;PCODE: $00000051 VOL: 0
+;PCODE: $00000052 VOL: 0
+;PCODE: $00000053 VOL: 0
+;PCODE: $00000054 VOL: 0
+;PCODE: $00000055 VOL: 0
+;PCODE: $00000056 VOL: 0
+; 0001 0052 {
+; 0001 0053 Registr_CRC >>= 1;
+;PCODE: $00000057 VOL: 0
+; 0001 0054 if ( (Registr_CRC & 0b00000001) != 0 )
+;PCODE: $00000058 VOL: 0
+;PCODE: $00000059 VOL: 0
+;PCODE: $0000005A VOL: 0
+; 0001 0055 Registr_CRC ^= 0x31;
+;PCODE: $0000005B VOL: 0
+;PCODE: $0000005C VOL: 0
+;PCODE: $0000005D VOL: 0
+; 0001 0056 }
+;PCODE: $0000005E VOL: 0
+;PCODE: $0000005F VOL: 0
+;PCODE: $00000060 VOL: 0
+;PCODE: $00000061 VOL: 0
+;PCODE: $00000062 VOL: 0
+;PCODE: $00000063 VOL: 0
+; 0001 0057 }
+;PCODE: $00000064 VOL: 0
+;PCODE: $00000065 VOL: 0
+; 0001 0058 return Registr_CRC;
+;PCODE: $00000066 VOL: 0
+;PCODE: $00000067 VOL: 0
+;PCODE: $00000068 VOL: 0
+;PCODE: $00000069 VOL: 0
+; 0001 0059 }
+;PCODE: $0000006A VOL: 0
+;void RadioPriem(void)
+; 0001 005E {
+;PCODE: $0000006B VOL: 0
+;PCODE: $0000006C VOL: 0
+; 0001 005F // Информационный бит и все его состояния
+; 0001 0060 static enum InfoBit
+; 0001 0061 {
+; 0001 0062 _0 = 0, // Бит 0
+; 0001 0063 _1 = 1, // Бит 1
+; 0001 0064 A_ = 2, // Полубит А
+; 0001 0065 Neopredelen = 4, // Неопределённое
+; 0001 0066 } InfoBit = Neopredelen;
+
+	.DSEG
+
+	.CSEG
+; 0001 0067 // Поиск пакета и все его состояния
+; 0001 0068 static enum Paket
+; 0001 0069 {
+; 0001 006A StartBit = 0, // Стартовый 1-ный бит
+; 0001 006B Bit0_7   = 1, // Бит с 1-го по 7-ой (вместе с бит 0 содержит преамбулу)
+; 0001 006C Bit8_n   = 2, // Бит с 8-го по n-ый (данные пользователя + CRC)
+; 0001 006D } Paket = StartBit;
+; 0001 006E /*
+; 0001 006F Устанавливается в 1 для синхронизации (в момент первого обнаружения PIN = 1)
+; 0001 0070 при поиске 0-го бита пакета
+; 0001 0071 */
+; 0001 0072 static char FlagSinhronizaciya = 1;
+
+	.DSEG
+
+	.CSEG
+; 0001 0073 // Счётчик логических 1 принятого сигнала в каждом полубите информационного бита
+; 0001 0074 static unsigned char PoluBitStrobCount = 0; // Кол-во прошедшых стробирующих пер ...
+; 0001 0075 static unsigned char PoluBit_A_Count1 = 0; // Кол-во принятых 1-ных сигналов пол ...
+; 0001 0076 static unsigned char PoluBit_B_Count1 = 0; // Кол-во принятых 1-ных сигналов пол ...
+; 0001 0077 static unsigned char IndexBayt = 0; // Индекс принятого байта
+; 0001 0078 static unsigned char IndexPaketBayt = 0; // Индекс принятого пакета байтов
+; 0001 0079 char BitPreambulaIn; // Буффер для бита преамбулы
+; 0001 007A static char BaytIn; // Буффер для принятого байта
+; 0001 007B static char FlagReset = 0; // Сбросс радио-приёма
+; 0001 007C 
+; 0001 007D // Сбросс радио-приёма
+; 0001 007E if (FlagReset == 1)
+;PCODE: $0000006D VOL: 0
+;	BitPreambulaIn -> R17
+;PCODE: $0000006E VOL: 0
+;PCODE: $0000006F VOL: 0
+;PCODE: $00000070 VOL: 0
+; 0001 007F {
+; 0001 0080 FlagReset = 0;
+;PCODE: $00000071 VOL: 0
+;PCODE: $00000072 VOL: 0
+; 0001 0081 FlagSinhronizaciya = 1;
+;PCODE: $00000073 VOL: 0
+;PCODE: $00000074 VOL: 0
+; 0001 0082 InfoBit = Neopredelen;
+;PCODE: $00000075 VOL: 0
+;PCODE: $00000076 VOL: 0
+; 0001 0083 Paket = StartBit;
+;PCODE: $00000077 VOL: 0
+;PCODE: $00000078 VOL: 0
+; 0001 0084 PoluBitStrobCount = 0;
+;PCODE: $00000079 VOL: 0
+;PCODE: $0000007A VOL: 0
+; 0001 0085 PoluBit_A_Count1 = 0;
+;PCODE: $0000007B VOL: 0
+;PCODE: $0000007C VOL: 0
+; 0001 0086 PoluBit_B_Count1 = 0;
+;PCODE: $0000007D VOL: 0
+;PCODE: $0000007E VOL: 0
+; 0001 0087 IndexBayt = 0;
+;PCODE: $0000007F VOL: 0
+;PCODE: $00000080 VOL: 0
+; 0001 0088 IndexPaketBayt = 0;
+;PCODE: $00000081 VOL: 0
+;PCODE: $00000082 VOL: 0
+; 0001 0089 }
+; 0001 008A // Синхронизации
+; 0001 008B if (FlagSinhronizaciya == 1)
+;PCODE: $00000083 VOL: 0
+;PCODE: $00000084 VOL: 0
+;PCODE: $00000085 VOL: 0
+;PCODE: $00000086 VOL: 0
+; 0001 008C {
+; 0001 008D if (BIT_RAVEN_1(RADIO_SIGNAL_IN_PINX, RADIO_SIGNAL_IN_PIN))
+;PCODE: $00000087 VOL: 0
+;PCODE: $00000088 VOL: 0
+;PCODE: $00000089 VOL: 0
+; 0001 008E FlagSinhronizaciya = 0;
+;PCODE: $0000008A VOL: 0
+;PCODE: $0000008B VOL: 0
+; 0001 008F else
+;PCODE: $0000008C VOL: 0
+;PCODE: $0000008D VOL: 0
+; 0001 0090 return;
+;PCODE: $0000008E VOL: 0
+;PCODE: $0000008F VOL: 0
+; 0001 0091 }
+;PCODE: $00000090 VOL: 0
+; 0001 0092 // Поиск информационного бита
+; 0001 0093 switch (InfoBit)
+;PCODE: $00000091 VOL: 0
+;PCODE: $00000092 VOL: 0
+; 0001 0094 {
+; 0001 0095 case Neopredelen:
+;PCODE: $00000093 VOL: 0
+;PCODE: $00000094 VOL: 0
+; 0001 0096 if (BIT_RAVEN_1(RADIO_SIGNAL_IN_PINX, RADIO_SIGNAL_IN_PIN))
+;PCODE: $00000095 VOL: 0
+;PCODE: $00000096 VOL: 0
+;PCODE: $00000097 VOL: 0
+; 0001 0097 ++PoluBit_A_Count1;
+;PCODE: $00000098 VOL: 0
+;PCODE: $00000099 VOL: 0
+;PCODE: $0000009A VOL: 0
+; 0001 0098 else
+;PCODE: $0000009B VOL: 0
+;PCODE: $0000009C VOL: 0
+; 0001 0099 {
+; 0001 009A /*
+; 0001 009B У принимаемого стартового бита нет спадающего фронта
+; 0001 009C Соответственно это был принят сигнал помехи
+; 0001 009D */
+; 0001 009E if (Paket == StartBit)
+;PCODE: $0000009D VOL: 0
+;PCODE: $0000009E VOL: 0
+;PCODE: $0000009F VOL: 0
+; 0001 009F {
+; 0001 00A0 FlagReset = 1;
+;PCODE: $000000A0 VOL: 0
+;PCODE: $000000A1 VOL: 0
+; 0001 00A1 return;
+;PCODE: $000000A2 VOL: 0
+;PCODE: $000000A3 VOL: 0
+; 0001 00A2 }
+; 0001 00A3 }
+;PCODE: $000000A4 VOL: 0
+;PCODE: $000000A5 VOL: 0
+; 0001 00A4 break;
+;PCODE: $000000A6 VOL: 0
+; 0001 00A5 case A_:
+;PCODE: $000000A7 VOL: 0
+;PCODE: $000000A8 VOL: 0
+;PCODE: $000000A9 VOL: 0
+; 0001 00A6 if (BIT_RAVEN_1(RADIO_SIGNAL_IN_PINX, RADIO_SIGNAL_IN_PIN))
+;PCODE: $000000AA VOL: 0
+;PCODE: $000000AB VOL: 0
+;PCODE: $000000AC VOL: 0
+; 0001 00A7 ++PoluBit_B_Count1;
+;PCODE: $000000AD VOL: 0
+;PCODE: $000000AE VOL: 0
+;PCODE: $000000AF VOL: 0
+; 0001 00A8 break;
+;PCODE: $000000B0 VOL: 0
+;PCODE: $000000B1 VOL: 0
+; 0001 00A9 }
+;PCODE: $000000B2 VOL: 0
+; 0001 00AA ++PoluBitStrobCount;
+;PCODE: $000000B3 VOL: 0
+;PCODE: $000000B4 VOL: 0
+;PCODE: $000000B5 VOL: 0
+; 0001 00AB // Полубит из входного сигнала найден
+; 0001 00AC if (PoluBitStrobCount == 8)
+;PCODE: $000000B6 VOL: 0
+;PCODE: $000000B7 VOL: 0
+;PCODE: $000000B8 VOL: 0
+; 0001 00AD {
+; 0001 00AE PoluBitStrobCount = 0;
+;PCODE: $000000B9 VOL: 0
+;PCODE: $000000BA VOL: 0
+; 0001 00AF switch (InfoBit)
+;PCODE: $000000BB VOL: 0
+; 0001 00B0 {
+; 0001 00B1 case Neopredelen:
+;PCODE: $000000BC VOL: 0
+;PCODE: $000000BD VOL: 0
+; 0001 00B2 // Стартовый бит принят
+; 0001 00B3 if (Paket == StartBit)
+;PCODE: $000000BE VOL: 0
+;PCODE: $000000BF VOL: 0
+;PCODE: $000000C0 VOL: 0
+; 0001 00B4 {
+; 0001 00B5 Paket = Bit0_7;
+;PCODE: $000000C1 VOL: 0
+;PCODE: $000000C2 VOL: 0
+; 0001 00B6 PoluBit_A_Count1 = 0;
+;PCODE: $000000C3 VOL: 0
+;PCODE: $000000C4 VOL: 0
+; 0001 00B7 return;
+;PCODE: $000000C5 VOL: 0
+;PCODE: $000000C6 VOL: 0
+; 0001 00B8 }
+; 0001 00B9 InfoBit = A_;
+;PCODE: $000000C7 VOL: 0
+;PCODE: $000000C8 VOL: 0
+;PCODE: $000000C9 VOL: 0
+; 0001 00BA return;
+;PCODE: $000000CA VOL: 0
+;PCODE: $000000CB VOL: 0
+; 0001 00BB case A_:
+;PCODE: $000000CC VOL: 0
+;PCODE: $000000CD VOL: 0
+;PCODE: $000000CE VOL: 0
+; 0001 00BC if (PoluBit_A_Count1 > PoluBit_B_Count1)
+;PCODE: $000000CF VOL: 0
+;PCODE: $000000D0 VOL: 0
+;PCODE: $000000D1 VOL: 0
+;PCODE: $000000D2 VOL: 0
+; 0001 00BD InfoBit = _1;
+;PCODE: $000000D3 VOL: 0
+;PCODE: $000000D4 VOL: 0
+; 0001 00BE if (PoluBit_A_Count1 < PoluBit_B_Count1)
+;PCODE: $000000D5 VOL: 0
+;PCODE: $000000D6 VOL: 0
+;PCODE: $000000D7 VOL: 0
+;PCODE: $000000D8 VOL: 0
+;PCODE: $000000D9 VOL: 0
+; 0001 00BF InfoBit = _0;
+;PCODE: $000000DA VOL: 0
+;PCODE: $000000DB VOL: 0
+; 0001 00C0 // Перезагрузка радио-приёма
+; 0001 00C1 if (PoluBit_A_Count1 == PoluBit_B_Count1)
+;PCODE: $000000DC VOL: 0
+;PCODE: $000000DD VOL: 0
+;PCODE: $000000DE VOL: 0
+;PCODE: $000000DF VOL: 0
+;PCODE: $000000E0 VOL: 0
+; 0001 00C2 {
+; 0001 00C3 FlagReset = 1;
+;PCODE: $000000E1 VOL: 0
+;PCODE: $000000E2 VOL: 0
+; 0001 00C4 return;
+;PCODE: $000000E3 VOL: 0
+;PCODE: $000000E4 VOL: 0
+; 0001 00C5 }
+; 0001 00C6 PoluBit_A_Count1 = 0;
+;PCODE: $000000E5 VOL: 0
+;PCODE: $000000E6 VOL: 0
+;PCODE: $000000E7 VOL: 0
+; 0001 00C7 PoluBit_B_Count1 = 0;
+;PCODE: $000000E8 VOL: 0
+;PCODE: $000000E9 VOL: 0
+; 0001 00C8 break;
+;PCODE: $000000EA VOL: 0
+; 0001 00C9 }
+;PCODE: $000000EB VOL: 0
+; 0001 00CA }
+; 0001 00CB switch (Paket)
+;PCODE: $000000EC VOL: 0
+;PCODE: $000000ED VOL: 0
+; 0001 00CC {
+; 0001 00CD //Поиск всех битов преамбулы
+; 0001 00CE case Bit0_7:
+;PCODE: $000000EE VOL: 0
+;PCODE: $000000EF VOL: 0
+; 0001 00CF switch (InfoBit)
+;PCODE: $000000F0 VOL: 0
+; 0001 00D0 {
+; 0001 00D1 case _0: case _1:
+;PCODE: $000000F1 VOL: 0
+;PCODE: $000000F2 VOL: 0
+;PCODE: $000000F3 VOL: 0
+;PCODE: $000000F4 VOL: 0
+;PCODE: $000000F5 VOL: 0
+;PCODE: $000000F6 VOL: 0
+;PCODE: $000000F7 VOL: 0
+; 0001 00D2 /*
+; 0001 00D3 Сравнение принятых бит с битами преамбулы
+; 0001 00D4 Если обнаружено несовпадение тогда перезагрузка радио-приёма
+; 0001 00D5 */
+; 0001 00D6 if (BIT_RAVEN_0(PREAMBULA, IndexBayt)) // n-бит преамбулы равен 0
+;PCODE: $000000F8 VOL: 0
+;PCODE: $000000F9 VOL: 0
+;PCODE: $000000FA VOL: 0
+;PCODE: $000000FB VOL: 0
+;PCODE: $000000FC VOL: 0
+; 0001 00D7 BitPreambulaIn = 0;
+;PCODE: $000000FD VOL: 0
+;PCODE: $000000FE VOL: 0
+; 0001 00D8 else // n-бит преамбулы равен 1
+;PCODE: $000000FF VOL: 0
+;PCODE: $00000100 VOL: 0
+; 0001 00D9 BitPreambulaIn = 1;
+;PCODE: $00000101 VOL: 0
+;PCODE: $00000102 VOL: 0
+; 0001 00DA if (InfoBit == BitPreambulaIn)
+;PCODE: $00000103 VOL: 0
+;PCODE: $00000104 VOL: 0
+;PCODE: $00000105 VOL: 0
+;PCODE: $00000106 VOL: 0
+; 0001 00DB ++IndexBayt;
+;PCODE: $00000107 VOL: 0
+;PCODE: $00000108 VOL: 0
+;PCODE: $00000109 VOL: 0
+; 0001 00DC else // Перезагрузка радио-приёма
+;PCODE: $0000010A VOL: 0
+;PCODE: $0000010B VOL: 0
+; 0001 00DD {
+; 0001 00DE FlagReset = 1;
+;PCODE: $0000010C VOL: 0
+;PCODE: $0000010D VOL: 0
+; 0001 00DF return;
+;PCODE: $0000010E VOL: 0
+;PCODE: $0000010F VOL: 0
+; 0001 00E0 }
+;PCODE: $00000110 VOL: 0
+; 0001 00E1 InfoBit = Neopredelen;
+;PCODE: $00000111 VOL: 0
+;PCODE: $00000112 VOL: 0
+; 0001 00E2 // Преамбула найдена
+; 0001 00E3 if (IndexBayt == 8)
+;PCODE: $00000113 VOL: 0
+;PCODE: $00000114 VOL: 0
+;PCODE: $00000115 VOL: 0
+; 0001 00E4 {
+; 0001 00E5 IndexBayt = 0;
+;PCODE: $00000116 VOL: 0
+;PCODE: $00000117 VOL: 0
+; 0001 00E6 Paket = Bit8_n;
+;PCODE: $00000118 VOL: 0
+;PCODE: $00000119 VOL: 0
+; 0001 00E7 }
+; 0001 00E8 }
+;PCODE: $0000011A VOL: 0
+;PCODE: $0000011B VOL: 0
+; 0001 00E9 break;
+;PCODE: $0000011C VOL: 0
+; 0001 00EA /*
+; 0001 00EB Поиск всех остальных информационных битов пакета
+; 0001 00EC Приём пользовательских данных
+; 0001 00ED */
+; 0001 00EE case Bit8_n:
+;PCODE: $0000011D VOL: 0
+;PCODE: $0000011E VOL: 0
+;PCODE: $0000011F VOL: 0
+; 0001 00EF switch (InfoBit)
+;PCODE: $00000120 VOL: 0
+; 0001 00F0 {
+; 0001 00F1 case _0: case _1:
+;PCODE: $00000121 VOL: 0
+;PCODE: $00000122 VOL: 0
+;PCODE: $00000123 VOL: 0
+;PCODE: $00000124 VOL: 0
+;PCODE: $00000125 VOL: 0
+;PCODE: $00000126 VOL: 0
+;PCODE: $00000127 VOL: 0
+; 0001 00F2 // Сохранить входной бит в буффере
+; 0001 00F3 if (InfoBit == 1)
+;PCODE: $00000128 VOL: 0
+;PCODE: $00000129 VOL: 0
+;PCODE: $0000012A VOL: 0
+; 0001 00F4 BIT_1(BaytIn,IndexBayt);
+;PCODE: $0000012B VOL: 0
+;PCODE: $0000012C VOL: 0
+;PCODE: $0000012D VOL: 0
+;PCODE: $0000012E VOL: 0
+;PCODE: $0000012F VOL: 0
+;PCODE: $00000130 VOL: 0
+; 0001 00F5 else
+;PCODE: $00000131 VOL: 0
+;PCODE: $00000132 VOL: 0
+; 0001 00F6 BIT_0(BaytIn,IndexBayt);
+;PCODE: $00000133 VOL: 0
+;PCODE: $00000134 VOL: 0
+;PCODE: $00000135 VOL: 0
+;PCODE: $00000136 VOL: 0
+;PCODE: $00000137 VOL: 0
+;PCODE: $00000138 VOL: 0
+;PCODE: $00000139 VOL: 0
+; 0001 00F7 ++IndexBayt;
+;PCODE: $0000013A VOL: 0
+;PCODE: $0000013B VOL: 0
+;PCODE: $0000013C VOL: 0
+;PCODE: $0000013D VOL: 0
+; 0001 00F8 InfoBit = Neopredelen;
+;PCODE: $0000013E VOL: 0
+;PCODE: $0000013F VOL: 0
+; 0001 00F9 // Принят ещё 1 байт
+; 0001 00FA if (IndexBayt == 8)
+;PCODE: $00000140 VOL: 0
+;PCODE: $00000141 VOL: 0
+;PCODE: $00000142 VOL: 0
+; 0001 00FB {
+; 0001 00FC IndexBayt = 0;
+;PCODE: $00000143 VOL: 0
+;PCODE: $00000144 VOL: 0
+; 0001 00FD // Предыдущий пакет потерян
+; 0001 00FE if (RadioPaketPrinyat == 1)
+;PCODE: $00000145 VOL: 1
+;PCODE: $00000146 VOL: 0
+;PCODE: $00000147 VOL: 0
+; 0001 00FF {
+; 0001 0100 RadioPaketOverflow = 1;
+;PCODE: $00000148 VOL: 0
+;PCODE: $00000149 VOL: 1
+; 0001 0101 }
+; 0001 0102 // Принят пользовательский байт
+; 0001 0103 if (IndexPaketBayt < RADIO_PAKET_DATA_BAYT_COUNT + 1)
+;PCODE: $0000014A VOL: 0
+;PCODE: $0000014B VOL: 0
+;PCODE: $0000014C VOL: 0
+;PCODE: $0000014D VOL: 0
+; 0001 0104 {
+; 0001 0105 RadioPaketIn[IndexPaketBayt] = BaytIn; // Сохранить принятый байт в пакете
+;PCODE: $0000014E VOL: 0
+;PCODE: $0000014F VOL: 1
+;PCODE: $00000150 VOL: 0
+;PCODE: $00000151 VOL: 0
+; 0001 0106 ++IndexPaketBayt;
+;PCODE: $00000152 VOL: 0
+;PCODE: $00000153 VOL: 0
+;PCODE: $00000154 VOL: 0
+; 0001 0107 }
+; 0001 0108 // Приём всего пакета данных завершён
+; 0001 0109 if (IndexPaketBayt == (RADIO_PAKET_DATA_BAYT_COUNT + 1))
+;PCODE: $00000155 VOL: 0
+;PCODE: $00000156 VOL: 0
+;PCODE: $00000157 VOL: 0
+;PCODE: $00000158 VOL: 0
+; 0001 010A {
+; 0001 010B // Проверка целостности пользовательских данных принятого пакета
+; 0001 010C if (RadioPaketIn[RADIO_PAKET_DATA_BAYT_COUNT] == CRC_8(RadioPaketIn, RADIO_PAKET ...
+;PCODE: $00000159 VOL: 1
+;PCODE: $0000015A VOL: 0
+;PCODE: $0000015B VOL: 0
+;PCODE: $0000015C VOL: 0
+;PCODE: $0000015D VOL: 0
+;PCODE: $0000015E VOL: 0
+;PCODE: $0000015F VOL: 0
+;PCODE: $00000160 VOL: 0
+; 0001 010D RadioPaketPrinyat = 1; // Данные в целости
+;PCODE: $00000161 VOL: 0
+;PCODE: $00000162 VOL: 1
+; 0001 010E // Начать поиск нового пакета
+; 0001 010F FlagReset = 1;
+;PCODE: $00000163 VOL: 0
+;PCODE: $00000164 VOL: 0
+;PCODE: $00000165 VOL: 0
+; 0001 0110 }
+; 0001 0111 }
+;PCODE: $00000166 VOL: 0
+; 0001 0112 }
+;PCODE: $00000167 VOL: 0
+;PCODE: $00000168 VOL: 0
+; 0001 0113 }
+;PCODE: $00000169 VOL: 0
+; 0001 0114 }
+;PCODE: $0000016A VOL: 0
+;PCODE: $0000016B VOL: 0
+;PCODE: $0000016C VOL: 0

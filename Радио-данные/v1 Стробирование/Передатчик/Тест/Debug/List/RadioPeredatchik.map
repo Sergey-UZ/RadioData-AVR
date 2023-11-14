@@ -1,0 +1,30 @@
+RAM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+tmr_knopki                                                                        0x00A0       1
+msLedR                                                                            0x00A1       1
+RadioPaketOut                                                                     0x00A2       7
+RadioPaketPeredacha                                                               0x00A9       1
+IndexBayt (RadioPeredacha.c)                                                      0x00AA       1
+IndexPaketBayt (RadioPeredacha.c)                                                 0x00AB       1
+Bit1 (RadioPeredacha.c)                                                           0x00AC       1
+Bit0 (RadioPeredacha.c)                                                           0x00AD       1
+StartBit (RadioPeredacha.c)                                                       0x00AE       1
+FlagPeriudPoslednegoBita (RadioPeredacha.c)                                       0x00AF       1
+
+EEPROM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                                          Register  Size
+------------------------------------------------------------------------------------------------
+
+FLASH Allocation [words]
+Function                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+timer1_compa_isr                                                                  0x0003E     44
+main                                                                              0x0006A     83
+CRC_8                                                                             0x000BD     29
+RadioWrite                                                                        0x000DA     40
+RadioPeredacha                                                                    0x00102     92

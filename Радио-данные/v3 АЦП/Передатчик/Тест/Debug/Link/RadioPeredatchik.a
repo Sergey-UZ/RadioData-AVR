@@ -1,0 +1,301 @@
+;PCODE: $00000000 VOL: 0
+	#ifndef __SLEEP_DEFINED__
+;PCODE: $00000001 VOL: 0
+	#define __SLEEP_DEFINED__
+;PCODE: $00000002 VOL: 0
+	.EQU __se_bit=0x20
+;PCODE: $00000003 VOL: 0
+	.EQU __sm_mask=0x18
+;PCODE: $00000004 VOL: 0
+	.EQU __sm_adc_noise_red=0x08
+;PCODE: $00000005 VOL: 0
+	.EQU __sm_powerdown=0x10
+;PCODE: $00000006 VOL: 0
+	.EQU __sm_standby=0x18
+;PCODE: $00000007 VOL: 0
+	.SET power_ctrl_reg=mcucr
+;PCODE: $00000008 VOL: 0
+	#endif
+;PCODE: $00000009 VOL: 0
+;PCODE: $0000000A VOL: 0
+;const char TMR_SCHITAT_KNOPKU_NAZHATOY = 50;
+;volatile unsigned char tmr_knopki;
+;volatile unsigned char msLedR = 0;
+;interrupt[TIM1_COMPA] void timer1_compa_isr(void);
+;void main(void);
+;interrupt [TIM1_COMPA] void timer1_compa_isr(void)
+; 0000 0030 {
+
+	.CSEG
+;PCODE: $0000000B VOL: 0
+;PCODE: $0000000C VOL: 0
+; 0000 0031 RadioPeredacha();
+;PCODE: $0000000D VOL: 0
+; 0000 0032 
+; 0000 0033 //RadioPeredachaMeandr();
+; 0000 0034 
+; 0000 0035 if (tmr_knopki != 0)
+;PCODE: $0000000E VOL: 1
+;PCODE: $0000000F VOL: 0
+;PCODE: $00000010 VOL: 0
+; 0000 0036 --tmr_knopki;
+;PCODE: $00000011 VOL: 1
+;PCODE: $00000012 VOL: 0
+;PCODE: $00000013 VOL: 1
+; 0000 0037 if (msLedR != 0)
+;PCODE: $00000014 VOL: 0
+;PCODE: $00000015 VOL: 1
+;PCODE: $00000016 VOL: 0
+;PCODE: $00000017 VOL: 0
+; 0000 0038 --msLedR;
+;PCODE: $00000018 VOL: 1
+;PCODE: $00000019 VOL: 0
+;PCODE: $0000001A VOL: 1
+; 0000 0039 }
+;PCODE: $0000001B VOL: 0
+;PCODE: $0000001C VOL: 0
+;PCODE: $0000001D VOL: 0
+;PCODE: $0000001E VOL: 0
+;void main(void)
+; 0000 003C {
+;PCODE: $0000001F VOL: 0
+; 0000 003D // Пользовательский пакет данных для отправки по радио-каналу
+; 0000 003E char RadioPaketData[RADIO_PAKET_DATA_BAYT_COUNT];
+; 0000 003F // Флаг для кнопки
+; 0000 0040 char FlagKnopkaNazhata = 0;
+; 0000 0041 
+; 0000 0042 // Crystal Oscillator division factor: 1
+; 0000 0043 #pragma optsize-
+; 0000 0044 CLKPR=(1<<CLKPCE);
+;PCODE: $00000020 VOL: 0
+;	RadioPaketData -> Y+0
+;	FlagKnopkaNazhata -> R17
+;PCODE: $00000021 VOL: 0
+;PCODE: $00000022 VOL: 0
+;PCODE: $00000023 VOL: 0
+;PCODE: $00000024 VOL: 0
+; 0000 0045 CLKPR=(0<<CLKPCE) | (0<<CLKPS3) | (0<<CLKPS2) | (0<<CLKPS1) | (0<<CLKPS0);
+;PCODE: $00000025 VOL: 0
+;PCODE: $00000026 VOL: 0
+; 0000 0046 #ifdef _OPTIMIZE_SIZE_
+; 0000 0047 #pragma optsize+
+; 0000 0048 #endif
+; 0000 0049 
+; 0000 004A // Input/Output Ports initialization
+; 0000 004B // Port B initialization
+; 0000 004C // Function: Bit5=In Bit4=In Bit3=In Bit2=Out Bit1=In Bit0=Out
+; 0000 004D DDRB=(0<<DDB5) | (0<<DDB4) | (0<<DDB3) | (1<<DDB2) | (0<<DDB1) | (1<<DDB0);
+;PCODE: $00000027 VOL: 0
+;PCODE: $00000028 VOL: 0
+; 0000 004E // State: Bit5=T Bit4=T Bit3=T Bit2=0 Bit1=P Bit0=0
+; 0000 004F PORTB=(0<<PORTB5) | (0<<PORTB4) | (0<<PORTB3) | (0<<PORTB2) | (1<<PORTB1) | (0<< ...
+;PCODE: $00000029 VOL: 0
+;PCODE: $0000002A VOL: 0
+; 0000 0050 
+; 0000 0051 // Timer/Counter 0 initialization
+; 0000 0052 // Clock source: System Clock
+; 0000 0053 // Clock value: Timer 0 Stopped
+; 0000 0054 // Mode: Normal top=0xFF
+; 0000 0055 // OC0A output: Disconnected
+; 0000 0056 // OC0B output: Disconnected
+; 0000 0057 TCCR0A=(0<<COM0A1) | (0<<COM0A0) | (0<<COM0B1) | (0<<COM0B0) | (0<<WGM01) | (0<< ...
+;PCODE: $0000002B VOL: 0
+;PCODE: $0000002C VOL: 0
+; 0000 0058 TCCR0B=(0<<WGM02) | (0<<CS02) | (0<<CS01) | (0<<CS00);
+;PCODE: $0000002D VOL: 0
+;PCODE: $0000002E VOL: 0
+; 0000 0059 TCNT0=0x00;
+;PCODE: $0000002F VOL: 0
+;PCODE: $00000030 VOL: 0
+; 0000 005A OCR0A=0x00;
+;PCODE: $00000031 VOL: 0
+;PCODE: $00000032 VOL: 0
+; 0000 005B OCR0B=0x00;
+;PCODE: $00000033 VOL: 0
+;PCODE: $00000034 VOL: 0
+; 0000 005C 
+; 0000 005D // Timer/Counter 1 initialization
+; 0000 005E // Clock source: System Clock
+; 0000 005F // Clock value: 125,000 kHz
+; 0000 0060 // Mode: CTC top=OCR1C
+; 0000 0061 // OC1A output: Disconnected
+; 0000 0062 // OC1B output: Disconnected
+; 0000 0063 // Timer Period: 1,04 ms
+; 0000 0064 // Timer1 Overflow Interrupt: Off
+; 0000 0065 // Compare A Match Interrupt: On
+; 0000 0066 // Compare B Match Interrupt: Off
+; 0000 0067 PLLCSR=(0<<PCKE) | (0<<PLLE) | (0<<PLOCK);
+;PCODE: $00000035 VOL: 0
+;PCODE: $00000036 VOL: 0
+; 0000 0068 
+; 0000 0069 TCCR1=(1<<CTC1) | (0<<PWM1A) | (0<<COM1A1) | (0<<COM1A0) | (0<<CS13) | (1<<CS12) ...
+;PCODE: $00000037 VOL: 0
+;PCODE: $00000038 VOL: 0
+; 0000 006A GTCCR=(0<<TSM) | (0<<PWM1B) | (0<<COM1B1) | (0<<COM1B0) | (0<<PSR1) | (0<<PSR0);
+;PCODE: $00000039 VOL: 0
+;PCODE: $0000003A VOL: 0
+; 0000 006B TCNT1=0x00;
+;PCODE: $0000003B VOL: 0
+;PCODE: $0000003C VOL: 0
+; 0000 006C OCR1A=0x00;
+;PCODE: $0000003D VOL: 0
+;PCODE: $0000003E VOL: 0
+; 0000 006D OCR1B=0x00;
+;PCODE: $0000003F VOL: 0
+;PCODE: $00000040 VOL: 0
+; 0000 006E OCR1C=0x81;
+;PCODE: $00000041 VOL: 0
+;PCODE: $00000042 VOL: 0
+; 0000 006F 
+; 0000 0070 // Timer(s)/Counter(s) Interrupt(s) initialization
+; 0000 0071 TIMSK=(1<<OCIE1A) | (0<<OCIE1B) | (0<<OCIE0A) | (0<<OCIE0B) | (0<<TOIE1) | (0<<T ...
+;PCODE: $00000043 VOL: 0
+;PCODE: $00000044 VOL: 0
+; 0000 0072 
+; 0000 0073 // External Interrupt(s) initialization
+; 0000 0074 // INT0: Off
+; 0000 0075 // Interrupt on any change on pins PCINT0-5: Off
+; 0000 0076 GIMSK=(0<<INT0) | (0<<PCIE);
+;PCODE: $00000045 VOL: 0
+;PCODE: $00000046 VOL: 0
+; 0000 0077 MCUCR=(0<<ISC01) | (0<<ISC00);
+;PCODE: $00000047 VOL: 0
+;PCODE: $00000048 VOL: 0
+; 0000 0078 
+; 0000 0079 // USI initialization
+; 0000 007A // Mode: Disabled
+; 0000 007B // Clock source: Register & Counter=no clk.
+; 0000 007C // USI Counter Overflow Interrupt: Off
+; 0000 007D USICR=(0<<USISIE) | (0<<USIOIE) | (0<<USIWM1) | (0<<USIWM0) | (0<<USICS1) | (0<< ...
+;PCODE: $00000049 VOL: 0
+;PCODE: $0000004A VOL: 0
+; 0000 007E 
+; 0000 007F // Analog Comparator initialization
+; 0000 0080 // Analog Comparator: Off
+; 0000 0081 // The Analog Comparator's positive input is
+; 0000 0082 // connected to the AIN0 pin
+; 0000 0083 // The Analog Comparator's negative input is
+; 0000 0084 // connected to the AIN1 pin
+; 0000 0085 ACSR=(1<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (0<<ACIE) | (0<<ACIS1) | (0<<A ...
+;PCODE: $0000004B VOL: 0
+;PCODE: $0000004C VOL: 0
+; 0000 0086 ADCSRB=(0<<ACME);
+;PCODE: $0000004D VOL: 0
+;PCODE: $0000004E VOL: 0
+; 0000 0087 // Digital input buffer on AIN0: On
+; 0000 0088 // Digital input buffer on AIN1: On
+; 0000 0089 DIDR0=(0<<AIN0D) | (0<<AIN1D);
+;PCODE: $0000004F VOL: 0
+;PCODE: $00000050 VOL: 0
+; 0000 008A 
+; 0000 008B // ADC initialization
+; 0000 008C // ADC disabled
+; 0000 008D ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADATE) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | ...
+;PCODE: $00000051 VOL: 0
+;PCODE: $00000052 VOL: 0
+; 0000 008E 
+; 0000 008F // Заполнение пользовательских данных
+; 0000 0090 RadioPaketData[0] = 11;
+;PCODE: $00000053 VOL: 0
+;PCODE: $00000054 VOL: 0
+; 0000 0091 RadioPaketData[1] = 22;
+;PCODE: $00000055 VOL: 0
+;PCODE: $00000056 VOL: 0
+; 0000 0092 RadioPaketData[2] = 33;
+;PCODE: $00000057 VOL: 0
+;PCODE: $00000058 VOL: 0
+; 0000 0093 RadioPaketData[3] = 44;
+;PCODE: $00000059 VOL: 0
+;PCODE: $0000005A VOL: 0
+; 0000 0094 RadioPaketData[4] = 55;
+;PCODE: $0000005B VOL: 0
+;PCODE: $0000005C VOL: 0
+; 0000 0095 
+; 0000 0096 // Globally enable interrupts
+; 0000 0097 #asm("sei")
+;PCODE: $0000005D VOL: 0
+; 0000 0098 
+; 0000 0099 while (1)
+;PCODE: $0000005E VOL: 0
+; 0000 009A {
+; 0000 009B // Определяет состояние кнопки (нажата она или нет)
+; 0000 009C if (BIT_RAVEN_0(PINB, 1))
+;PCODE: $0000005F VOL: 0
+;PCODE: $00000060 VOL: 0
+;PCODE: $00000061 VOL: 0
+; 0000 009D {
+; 0000 009E //Начать отсчёт общего времени нажатия на кнопку
+; 0000 009F //Запустить програмный таймер отсчёта времени нажатия на кнопку
+; 0000 00A0 tmr_knopki = TMR_SCHITAT_KNOPKU_NAZHATOY;
+;PCODE: $00000062 VOL: 0
+;PCODE: $00000063 VOL: 1
+; 0000 00A1 //Пока кнопка нажата
+; 0000 00A2 while (BIT_RAVEN_0(PINB, 1))
+;PCODE: $00000064 VOL: 0
+;PCODE: $00000065 VOL: 0
+;PCODE: $00000066 VOL: 0
+;PCODE: $00000067 VOL: 0
+; 0000 00A3 {
+; 0000 00A4 //Если кнопка была нажата положеное время, тогда
+; 0000 00A5 if (tmr_knopki == 0)
+;PCODE: $00000068 VOL: 1
+;PCODE: $00000069 VOL: 0
+;PCODE: $0000006A VOL: 0
+; 0000 00A6 {
+; 0000 00A7 if (FlagKnopkaNazhata == 0)
+;PCODE: $0000006B VOL: 0
+;PCODE: $0000006C VOL: 0
+; 0000 00A8 {
+; 0000 00A9 FlagKnopkaNazhata = 1;
+;PCODE: $0000006D VOL: 0
+;PCODE: $0000006E VOL: 0
+; 0000 00AA if (RadioWrite(RadioPaketData) == 1)
+;PCODE: $0000006F VOL: 0
+;PCODE: $00000070 VOL: 0
+;PCODE: $00000071 VOL: 0
+;PCODE: $00000072 VOL: 0
+; 0000 00AB {
+; 0000 00AC msLedR = 150;
+;PCODE: $00000073 VOL: 0
+;PCODE: $00000074 VOL: 1
+; 0000 00AD PORTB.0 = 1;
+;PCODE: $00000075 VOL: 0
+;PCODE: $00000076 VOL: 0
+; 0000 00AE }
+; 0000 00AF }
+;PCODE: $00000077 VOL: 0
+; 0000 00B0 }
+;PCODE: $00000078 VOL: 0
+; 0000 00B1 if (msLedR == 0)
+;PCODE: $00000079 VOL: 0
+;PCODE: $0000007A VOL: 1
+;PCODE: $0000007B VOL: 0
+;PCODE: $0000007C VOL: 0
+; 0000 00B2 PORTB.0 = 0;
+;PCODE: $0000007D VOL: 0
+;PCODE: $0000007E VOL: 0
+; 0000 00B3 }
+;PCODE: $0000007F VOL: 0
+;PCODE: $00000080 VOL: 0
+;PCODE: $00000081 VOL: 0
+; 0000 00B4 FlagKnopkaNazhata = 0;
+;PCODE: $00000082 VOL: 0
+;PCODE: $00000083 VOL: 0
+; 0000 00B5 }
+; 0000 00B6 if (msLedR == 0)
+;PCODE: $00000084 VOL: 0
+;PCODE: $00000085 VOL: 1
+;PCODE: $00000086 VOL: 0
+;PCODE: $00000087 VOL: 0
+; 0000 00B7 PORTB.0 = 0;
+;PCODE: $00000088 VOL: 0
+;PCODE: $00000089 VOL: 0
+; 0000 00B8 }
+;PCODE: $0000008A VOL: 0
+;PCODE: $0000008B VOL: 0
+;PCODE: $0000008C VOL: 0
+; 0000 00B9 }
+;PCODE: $0000008D VOL: 0
+;PCODE: $0000008E VOL: 0
+;PCODE: $0000008F VOL: 0
+;PCODE: $00000090 VOL: 0

@@ -1,0 +1,8 @@
+VERSION:3 SOURCE_TIMESTAMP:575461BB
+NODE:I LEVEL:0 LINE:27 "C:\cvavr\inc\tiny2313a.h"
+NODE:I LEVEL:0 LINE:28 "RadioPriem.h"
+NODE:V LEVEL:0 LINE:30 "msLedG -> RAM:????"
+NODE:V LEVEL:0 LINE:31 "msLedB -> RAM:????"
+NODE:F LEVEL:0 LINE:41 "timer1_compa_isr(void)"
+NODE:V LEVEL:0 LINE:43 "Periud_1ms_S0000000000 -> RAM:????"
+NODE:F LEVEL:0 LINE:63 "main(void)"

@@ -1,0 +1,35 @@
+RAM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+msLedB                                                                            0x0160       1
+msLedR                                                                            0x0161       1
+RadioPaketIn                                                                      0x0162       6
+RadioPaketPrinyat                                                                 0x0168       1
+RadioPaketOverflow                                                                0x0169       1
+InfoBit (RadioPriem.c)                                                            0x016A       1
+Paket (RadioPriem.c)                                                              0x016B       1
+FlagSinhronizaciya (RadioPriem.c)                                                 0x016C       1
+PoluBitStrobCount (RadioPriem.c)                                                  0x016D       1
+PoluBit_A_Count (RadioPriem.c)                                                    0x016E       2
+PoluBit_B_Count (RadioPriem.c)                                                    0x0170       2
+IndexBayt (RadioPriem.c)                                                          0x0172       1
+IndexPaketBayt (RadioPriem.c)                                                     0x0173       1
+BaytIn (RadioPriem.c)                                                             0x0174       1
+
+EEPROM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                                          Register  Size
+------------------------------------------------------------------------------------------------
+
+FLASH Allocation [words]
+Function                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+timer2_comp_isr                                                                   0x00048     25
+adc_isr                                                                           0x00061     28
+main                                                                              0x0007D     91
+RadioRead                                                                         0x000D8     37
+CRC_8                                                                             0x000FD     29
+RadioPriem                                                                        0x0011A    228
